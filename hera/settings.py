@@ -27,8 +27,7 @@ SECRET_KEY=env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
-#ALLOWED_HOSTS = [''3.66.219.138','3.66.219.138:8000','127.0.0.1','127.0.0.1:8000','localhost','localhost:8000/admin','localhost:8000'']
+ALLOWED_HOSTS = ['18.156.177.101','18.156.177.101:8000','127.0.0.1','127.0.0.1:8000']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -76,11 +75,15 @@ WSGI_APPLICATION = 'hera.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+DATABASES={
+   'default':{
+      'ENGINE':'django.db.backends.postgresql_psycopg2',
+      'NAME': env('DB_NAME'),
+      'USER': env('DB_USER'),
+      'PASSWORD': env('DB_PASSWORD'),
+      'HOST': 'localhost',
+      'PORT': '5432',
+   }
 }
 
 
@@ -126,3 +129,20 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT= os.path.join(BASE_DIR, 'media/')
+
+AWS_ACCESS_KEY_ID = env('ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = env('SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = 'herawebproje'
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_OBJECT_PARAMETERS= {
+    'CacheControl':'max-age=86400',
+}
+AWS_LOCATION = 'static'
+STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+
+DEFAULT_FILE_STORAGE= 'hera.storages_backends.MediaStorage'
