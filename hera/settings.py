@@ -27,8 +27,8 @@ SECRET_KEY=env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['3.66.219.138','3.66.219.138:8000','127.0.0.1','127.0.0.1:8000','localhost','localhost:8000']
-
+ALLOWED_HOSTS = ['*']
+#ALLOWED_HOSTS = [''3.66.219.138','3.66.219.138:8000','127.0.0.1','127.0.0.1:8000','localhost','localhost:8000/admin','localhost:8000'']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -57,7 +57,7 @@ ROOT_URLCONF = 'hera.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR, 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
